@@ -14,6 +14,7 @@ function addBookToLibrary(title, author, pages, read) {
 
 const books = document.querySelector(".books");
 function displayBooks() {
+    let button = books.removeChild(books.lastElementChild);
     for (let book of myLibrary) {
         let temp = document.createElement('div');
         temp.classList.add('book');
@@ -35,12 +36,13 @@ function displayBooks() {
         temp.appendChild(read);
         books.appendChild(temp);
     }
+    books.appendChild(button);
 }
 
-addBookToLibrary('Hello', 'Sean', 197, true);
-addBookToLibrary('Hello', 'Sean', 197, true);
-addBookToLibrary('Hello', 'Sean', 197, true);
-addBookToLibrary('Hello', 'Sean', 197, true);
+addBookToLibrary('Biography', 'Sean Jung', 197, true);
+addBookToLibrary('Biography', 'Sean Jung', 197, true);
+addBookToLibrary('Biography', 'Sean Jung', 197, true);
+addBookToLibrary('Biography', 'Sean Jung', 197, true);
 
 displayBooks();
 console.log(myLibrary);
