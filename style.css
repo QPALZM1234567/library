@@ -75,5 +75,18 @@ h1 {
 }
 
 .books {
+    box-sizing: border-box;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
     background-color: black;
+    padding: min(4vh, 4vw);
+    display: grid;
+    gap: min(2vh, 2vw);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(3vw, 18vw));
+}
+
+.book {
+    background-color: aqua;
 }
