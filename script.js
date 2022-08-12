@@ -36,8 +36,86 @@ function displayBooks() {
     let read = document.createElement('p');
     read.textContent = "Read: " + book.read;
     temp.appendChild(read);
+
+    let remove = document.createElement('button');
+    remove.setAttribute('data-index', myLibrary.length - 1);
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => {
+        myLibrary.splice(remove.getAttribute('data-index'), 1);
+        displayAll();
+    })
+
+    let toggle = document.createElement('button');
+    toggle.setAttribute('data-index', myLibrary.length - 1);
+    toggle.textContent = 'Switch';
+    toggle.addEventListener('click', () => {
+        myLibrary[toggle.getAttribute('data-index')].read = !myLibrary[toggle.getAttribute('data-index')].read;
+        document.querySelector(`.book:nth-child(${parseInt(toggle.getAttribute('data-index')) + 1}) :nth-child(4)`).textContent = "Read: " + myLibrary[toggle.getAttribute('data-index')].read;
+    })
+
+    let base = document.createElement('div.buttons');
+    base.appendChild(remove);
+    base.appendChild(toggle);
+
+    temp.appendChild(base);
+
+
     books.appendChild(temp);
 
+    books.appendChild(button);
+}
+
+function displayAll() {
+    let button = books.removeChild(books.lastElementChild);
+    for (let i = 0; i < myLibrary.length + 1; i++) {
+        books.removeChild(books.lastElementChild);
+    }
+    for (let i = 0; i < myLibrary.length; i++) {
+        let book = myLibrary[i];
+        let temp = document.createElement('div');
+        temp.classList.add('book');
+
+        let title = document.createElement('h1');
+        title.textContent = "Title: " + book.title;
+        temp.appendChild(title);
+        
+        let author = document.createElement('h2');
+        author.textContent = "Author: " + book.author;
+        temp.appendChild(author);
+
+        let pages = document.createElement('p');
+        pages.textContent = "Pages: " + book.pages;
+        temp.appendChild(pages);
+
+        let read = document.createElement('p');
+        read.textContent = "Read: " + book.read;
+        temp.appendChild(read);
+
+
+        let remove = document.createElement('button');
+        remove.setAttribute('data-index', i);
+        remove.textContent = 'Remove';
+        remove.addEventListener('click', () => {
+            myLibrary.splice(remove.getAttribute('data-index'), 1);
+            displayAll();
+        })
+
+        let toggle = document.createElement('button');
+        toggle.setAttribute('data-index', i);
+        toggle.textContent = 'Switch';
+        toggle.addEventListener('click', () => {
+            myLibrary[toggle.getAttribute('data-index')].read = !myLibrary[toggle.getAttribute('data-index')].read;
+            document.querySelector(`.book:nth-child(${parseInt(toggle.getAttribute('data-index')) + 1}) :nth-child(4)`).textContent = "Read: " + myLibrary[toggle.getAttribute('data-index')].read;
+        })
+
+        let base = document.createElement('div.buttons');
+        base.appendChild(remove);
+        base.appendChild(toggle);
+
+        temp.appendChild(base);
+
+        books.appendChild(temp);
+    }
     books.appendChild(button);
 }
 
@@ -104,12 +182,12 @@ add.addEventListener('click', () => {
     input.setAttribute("name", "read");
     
     let option = document.createElement('option');
-    option.setAttribute('value', 'true');
+    option.setAttribute('value', true);
     option.textContent = 'Yes';
     input.appendChild(option);
 
     let option2 = document.createElement('option');
-    option2.setAttribute('value', 'false');
+    option2.setAttribute('value', false);
     option2.textContent = 'No';
     input.appendChild(option2);
 
@@ -137,3 +215,10 @@ add.addEventListener('click', () => {
 
 });
 
+function fixIndex() {
+    let buttons = document.querySelectorAll('[data-index]');
+    let stop = buttons.length;
+    for (let i = 0; i < stop; i++) {
+        buttons[i].setAttribute('data-index', i);
+    }
+}
