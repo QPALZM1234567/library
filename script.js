@@ -16,27 +16,28 @@ function addBookToLibrary(title, author, pages, read) {
 const books = document.querySelector(".books");
 function displayBooks() {
     let button = books.removeChild(books.lastElementChild);
-    for (let book of myLibrary) {
-        let temp = document.createElement('div');
-        temp.classList.add('book');
 
-        let title = document.createElement('h1');
-        title.textContent = "Title: " + book.title;
-        temp.appendChild(title);
-        
-        let author = document.createElement('h2');
-        author.textContent = "Author: " + book.author;
-        temp.appendChild(author);
+    let book = myLibrary[myLibrary.length - 1];
+    let temp = document.createElement('div');
+    temp.classList.add('book');
 
-        let pages = document.createElement('p');
-        pages.textContent = "Pages: " + book.pages;
-        temp.appendChild(pages);
+    let title = document.createElement('h1');
+    title.textContent = "Title: " + book.title;
+    temp.appendChild(title);
+    
+    let author = document.createElement('h2');
+    author.textContent = "Author: " + book.author;
+    temp.appendChild(author);
 
-        let read = document.createElement('p');
-        read.textContent = "Read: " + book.read;
-        temp.appendChild(read);
-        books.appendChild(temp);
-    }
+    let pages = document.createElement('p');
+    pages.textContent = "Pages: " + book.pages;
+    temp.appendChild(pages);
+
+    let read = document.createElement('p');
+    read.textContent = "Read: " + book.read;
+    temp.appendChild(read);
+    books.appendChild(temp);
+
     books.appendChild(button);
 }
 
@@ -57,7 +58,7 @@ add.addEventListener('click', () => {
     });
 
     let form = document.createElement('form');
-    form.setAttribute("action", "script.js");
+    form.setAttribute("action", "");
     form.setAttribute("method", "post");
     form.setAttribute("onclick", "event.stopPropagation()");
 
@@ -68,6 +69,7 @@ add.addEventListener('click', () => {
     input.setAttribute("type", "text");
     input.setAttribute("id", "title");
     input.setAttribute("name", "title");
+    input.setAttribute("required", true);
     form.appendChild(label);
     form.appendChild(input);
 
@@ -78,6 +80,7 @@ add.addEventListener('click', () => {
     input.setAttribute("type", "text");
     input.setAttribute("id", "author");
     input.setAttribute("name", "author");
+    input.setAttribute("required", true);
     form.appendChild(label);
     form.appendChild(input);
 
@@ -88,6 +91,8 @@ add.addEventListener('click', () => {
     input.setAttribute("type", "number");
     input.setAttribute("id", "pages");
     input.setAttribute("name", "pages");
+    input.setAttribute("required", true);
+    input.setAttribute("max", 100000);
     form.appendChild(label);
     form.appendChild(input);
 
@@ -114,6 +119,16 @@ add.addEventListener('click', () => {
     let button = document.createElement('button');
     button.setAttribute('type', 'submit');
     button.textContent = 'Submit';
+    form.addEventListener('submit', (e) => {
+        let title = document.querySelector('#title');
+        let author = document.querySelector('#author');
+        let pages = document.querySelector('#pages');
+        let read = document.querySelector('#read');
+        addBookToLibrary(title.value, author.value, pages.value, read.value);
+        displayBooks();
+        body.removeChild(body.lastElementChild);
+        e.preventDefault();
+    });
     form.appendChild(button);
 
 
@@ -122,10 +137,3 @@ add.addEventListener('click', () => {
 
 });
 
-addBookToLibrary('Biography', 'Sean Jung', 197, true);
-addBookToLibrary('Biography', 'Sean Jung', 197, true);
-addBookToLibrary('Biography', 'Sean Jung', 197, true);
-addBookToLibrary('Biography', 'Sean Jung', 197, true);
-
-displayBooks();
-console.log(myLibrary);
