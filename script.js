@@ -52,10 +52,14 @@ add.addEventListener('click', () => {
     background.style.display = "flex";
     background.style.justifyContent = "center";
     background.style.alignItems = "center";
+    background.addEventListener('click', () => {
+        body.removeChild(body.lastElementChild);
+    });
 
     let form = document.createElement('form');
     form.setAttribute("action", "script.js");
     form.setAttribute("method", "post");
+    form.setAttribute("onclick", "event.stopPropagation()");
 
     let label = document.createElement('label');
     label.setAttribute("for", "title");
@@ -66,6 +70,51 @@ add.addEventListener('click', () => {
     input.setAttribute("name", "title");
     form.appendChild(label);
     form.appendChild(input);
+
+    label = document.createElement('label');
+    label.setAttribute("for", "author");
+    label.textContent = "Author: ";
+    input = document.createElement('input');
+    input.setAttribute("type", "text");
+    input.setAttribute("id", "author");
+    input.setAttribute("name", "author");
+    form.appendChild(label);
+    form.appendChild(input);
+
+    label = document.createElement('label');
+    label.setAttribute("for", "pages");
+    label.textContent = "Pages: ";
+    input = document.createElement('input');
+    input.setAttribute("type", "number");
+    input.setAttribute("id", "pages");
+    input.setAttribute("name", "pages");
+    form.appendChild(label);
+    form.appendChild(input);
+
+    label = document.createElement('label');
+    label.setAttribute("for", "read");
+    label.textContent = "Read: ";
+    input = document.createElement('select');
+    input.setAttribute("id", "read");
+    input.setAttribute("name", "read");
+    
+    let option = document.createElement('option');
+    option.setAttribute('value', 'true');
+    option.textContent = 'Yes';
+    input.appendChild(option);
+
+    let option2 = document.createElement('option');
+    option2.setAttribute('value', 'false');
+    option2.textContent = 'No';
+    input.appendChild(option2);
+
+    form.appendChild(label);
+    form.appendChild(input);
+
+    let button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.textContent = 'Submit';
+    form.appendChild(button);
 
 
     background.appendChild(form);
